@@ -4,6 +4,7 @@ LICENSE = "MIT"
 require recipes-core/images/avnet-image-common.inc
 
 IMAGE_INSTALL_ultra96v2 += "\
+		ap1302-firmware \
 		libdrm \
 		libdrm-tests \
 		libdrm-kms \
