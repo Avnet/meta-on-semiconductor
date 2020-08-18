@@ -1,0 +1,6 @@
+&amba {
+   /delete-node/ axi-interrupt-ctrl;
+   /delete-node/ zyxclmm_drm;
+};
+
+#include "ultra96v2_dualcam_module.dtsi"
