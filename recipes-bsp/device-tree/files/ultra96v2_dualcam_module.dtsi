@@ -8,6 +8,8 @@
 				compatible = "onnn,ap1302";
 				reg = <0x3c>;
 
+				clocks = <&ap1302_osc>;
+
 				onnn,cam-config = <0>; // 0 - ar0144 dual, 1 - ar1335 single
 				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
 
@@ -19,6 +21,15 @@
 				};
 			};
 		};
+	};
+};
+
+&amba {
+	ap1302_osc: ap1302oscillator {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency  = <48000000>;
+		clock-output-names = "ap1302osc";
 	};
 };
 
