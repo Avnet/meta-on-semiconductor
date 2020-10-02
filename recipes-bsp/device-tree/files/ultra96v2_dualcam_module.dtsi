@@ -4,7 +4,7 @@
 	i2c-mux@75 {
 		reset-gpios = <&gpio 12 1>;
 		i2c@2 {
-			ap1302_0: camera@3c {
+			camera@3c {
 				compatible = "onnn,ap1302";
 				reg = <0x3c>;
 
