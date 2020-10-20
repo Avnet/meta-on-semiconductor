@@ -12,6 +12,7 @@
 
 				onnn,cam-config = <0>; // 0 - ar0144 dual, 1 - ar1335 single
 				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
+				standby-gpios = <&gpio 41 GPIO_ACTIVE_HIGH>;
 
 				port@0 {
 					reg = <0>;
