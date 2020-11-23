@@ -1,6 +1,6 @@
 #!/bin/bash
 	
-media-ctl -d /dev/media0 -V '"AP1302.4-003c":0 [fmt:UYVY8_1X16/2560x800 field:none]'
+media-ctl -d /dev/media0 -V '"ap1302.4-003c":0 [fmt:UYVY8_1X16/2560x800 field:none]'
 
 media-ctl -d /dev/media0 -V '"a0020000.mipi_csi2_rx_subsystem":0 [fmt:UYVY8_1X16/2560x800 field:none]'
 media-ctl -d /dev/media0 -V '"a0020000.mipi_csi2_rx_subsystem":1 [fmt:UYVY8_1X16/2560x800 field:none]'
