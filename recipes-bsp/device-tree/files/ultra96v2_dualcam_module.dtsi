@@ -24,14 +24,14 @@
 					#address-cells = <1>;
 					#size-cells = <0>;
 
+					onnn,model = "onnn,ar0144";
+
 					sensor@0 {
 						reg = <0>;
-						compatible = "onnn,ar0144";
 					};
 
 					sensor@1 {
 						reg = <1>;
-						compatible = "onnn,ar0144";
 					};
 				};
 			};
