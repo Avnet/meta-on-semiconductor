@@ -1,6 +1,28 @@
 &amba {
    /delete-node/ axi-interrupt-ctrl;
    /delete-node/ zyxclmm_drm;
+
+	ap1302_osc: ap1302oscillator {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency  = <48000000>;
+		clock-output-names = "ap1302osc";
+	};
 };
 
-#include "ultra96v2_dualcam_module.dtsi"
+&amba_pl {
+	v_frmbuf_wr@a0000000 {
+		reset-gpios = <&GPIO_axi_gpio_0 3 0 1>;
+	};
+
+	v_frmbuf_rd@a00c0000 {
+		reset-gpios = <&GPIO_axi_gpio_0 4 0 1>;
+	};
+};
+
+
+&i2c1 {
+	i2c-mux@75 {
+		reset-gpios = <&gpio 12 1>;
+	};
+};
