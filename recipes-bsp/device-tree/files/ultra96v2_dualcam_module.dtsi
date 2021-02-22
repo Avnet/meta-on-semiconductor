@@ -11,7 +11,7 @@
 				clocks = <&ap1302_osc>;
 
 				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
-				standby-gpios = <&gpio 41 GPIO_ACTIVE_HIGH>;
+				standby-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 
 				port@0 {
 					reg = <0>;
