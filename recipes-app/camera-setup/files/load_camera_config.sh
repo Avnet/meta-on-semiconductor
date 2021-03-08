@@ -2,10 +2,13 @@
 
 case "$1" in
 	ar0144_dual)
+		CAMERA_RESOLUTION=2560x800
 	;;
 	ar0144_single)
+		CAMERA_RESOLUTION=1280x800
 	;;
 	ar1335_single)
+		CAMERA_RESOLUTION=3840x3160
 	;;
 	*)
 		echo "Camera setup not supported: $1";
@@ -39,6 +42,7 @@ rmmod xilinx_csi2rxss
 mkdir -p /sys/kernel/config/device-tree/overlays/ap1302
 cat /boot/devicetree/$1.dtbo > /sys/kernel/config/device-tree/overlays/ap1302/dtbo
 
-
 modprobe xilinx_vpss_scaler
 modprobe xilinx_csi2rxss
+
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080)
