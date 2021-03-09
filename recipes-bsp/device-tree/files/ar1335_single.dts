@@ -21,6 +21,7 @@
 					reg = <0>;
 					ias_out0: endpoint {
 						remote-endpoint = <&csiss_in>;
+						data-lanes = <1 2 3 4>;
 					};
 				};
 
