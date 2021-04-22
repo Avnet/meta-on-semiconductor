@@ -1,0 +1,85 @@
+#include <dt-bindings/media/xilinx-vip.h>
+
+&i2c1 {
+	i2c-mux@75 {
+		reset-gpios = <&gpio 12 1>;
+		i2c@2 {
+			camera@3c {
+				compatible = "onnn,ap1302";
+				reg = <0x3c>;
+
+				clocks = <&ap1302_osc>;
+
+				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
+				standby-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
+
+				port@0 {
+					reg = <0>;
+					ias_out0: endpoint {
+						remote-endpoint = <&mipi_csi_inCAPTURE_PIPLINE_mipi_csi2_rx_subsyst_0>;
+					};
+				};
+
+				sensors {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					onnn,model = "onnn,ar0144";
+
+					sensor@0 {
+						reg = <0>;
+					};
+
+					sensor@1 {
+						reg = <1>;
+					};
+				};
+			};
+		};
+	};
+};
+
+&amba {
+	ap1302_osc: ap1302oscillator {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency  = <48000000>;
+		clock-output-names = "ap1302osc";
+	};
+};
+
+/ {
+	amba_pl@0 {
+		mipi_csi2_rx_subsystem@b0000000 {
+			compatible = "xlnx,mipi-csi2-rx-subsystem-5.0";
+			ports {
+				port@0 {
+					xlnx,video-format = <XVIP_VF_YUV_422>;
+				};
+				port@1 {
+					xlnx,video-format = <XVIP_VF_YUV_422>;
+					mipi_csi_inCAPTURE_PIPLINE_mipi_csi2_rx_subsyst_0: endpoint {
+						remote-endpoint = <&ias_out0>;
+					};
+				};
+			};
+		};
+
+		v_frmbuf_wr@b0010000 {
+			reset-gpios = <&GPIO_axi_gpio_0 3 0 1>;
+		};
+
+		v_proc_ss@b0040000 {
+			compatible = "xlnx,v-vpss-scaler-2.2";
+			reset-gpios = <&GPIO_axi_gpio_0 5 0 1>;
+			ports {
+				port@0 {
+					xlnx,video-format = <XVIP_VF_YUV_422>;
+				};
+				port@1 {
+					xlnx,video-format = <XVIP_VF_YUV_422>;
+				};
+			};
+		};
+	};
+};
