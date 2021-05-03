@@ -13,10 +13,11 @@
 				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
 				standby-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 
-				port@0 {
-					reg = <0>;
-					ias_out0: endpoint {
+				port@2 {
+					reg = <2>;
+					ap1302_out: endpoint {
 						remote-endpoint = <&mipi_csi_inCAPTURE_PIPLINE_mipi_csi2_rx_subsyst_0>;
+						data-lanes = <1 2 3 4>;
 					};
 				};
 
@@ -59,7 +60,7 @@
 				port@1 {
 					xlnx,video-format = <XVIP_VF_YUV_422>;
 					mipi_csi_inCAPTURE_PIPLINE_mipi_csi2_rx_subsyst_0: endpoint {
-						remote-endpoint = <&ias_out0>;
+						remote-endpoint = <&ap1302_out>;
 					};
 				};
 			};
