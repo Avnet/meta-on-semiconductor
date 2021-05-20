@@ -17,8 +17,8 @@
 				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
 				standby-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 
-				port@0 {
-					reg = <0>;
+				port@2 {
+					reg = <2>;
 					ias_out0: endpoint {
 						remote-endpoint = <&csiss_in>;
 						data-lanes = <1 2 3 4>;
