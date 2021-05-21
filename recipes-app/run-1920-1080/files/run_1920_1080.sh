@@ -5,7 +5,7 @@ OUTPUT_W=1920
 OUTPUT_H=1080
 OUTPUT_RESOLUTION=${OUTPUT_W}x${OUTPUT_H}
 
-media-ctl -d /dev/media0 -V "'ap1302.4-003c':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
+media-ctl -d /dev/media0 -V "'ap1302.4-003c':2 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 
 media-ctl -d /dev/media0 -V "'a0020000.mipi_csi2_rx_subsystem':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 media-ctl -d /dev/media0 -V "'a0020000.mipi_csi2_rx_subsystem':1 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
