@@ -1,7 +1,6 @@
 /dts-v1/;
 /plugin/;
 
-#include <dt-bindings/media/xilinx-vip.h>
 #include <dt-bindings/gpio/gpio.h>
 
 /{
@@ -20,7 +19,7 @@
 				port@2 {
 					reg = <2>;
 					ias_out0: endpoint {
-						remote-endpoint = <&csiss_in>;
+						remote-endpoint = <&mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0>;
 						data-lanes = <1 2 3 4>;
 					};
 				};
@@ -40,81 +39,9 @@
 	};
 
 	fragment@1 {
-		target = <&CAPTURE_PIPLINE_mipi_csi2_rx_subsyst_0>;
+		target = <&mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0>;
 		__overlay__ {
-			ports {
-				#address-cells = <1>;
-				#size-cells = <0>;
-
-				port@0 {
-					reg = <0>;
-					xlnx,video-format = <XVIP_VF_YUV_422>;
-					xlnx,video-width = <8>;
-					csiss_out: endpoint {
-						remote-endpoint = <&scaler_in>;
-					};
-				};
-				port@1 {
-					reg = <1>;
-					xlnx,video-format = <XVIP_VF_YUV_422>;
-					xlnx,video-width = <8>;
-					csiss_in: endpoint {
-						remote-endpoint = <&ias_out0>;
-					};
-				};
-			};
-		};
-	};
-
-	fragment@2 {
-		target = <&CAPTURE_PIPLINE_v_proc_ss_0>;
-		__overlay__ {
-			compatible = "xlnx,v-vpss-scaler-2.2";
-			reset-gpios = <&GPIO_axi_gpio_0 5 0 1>;
-			ports {
-				#address-cells = <1>;
-				#size-cells = <0>;
-				port@0 {
-					/* For xlnx,video-format user needs to fill as per their requirement */
-					reg = <0>;
-					xlnx,video-format = <XVIP_VF_YUV_422>;
-					xlnx,video-width = <8>;
-					scaler_in: endpoint {
-						remote-endpoint = <&csiss_out>;
-					};
-				};
-				port@1 {
-					/* For xlnx,video-format user needs to fill as per their requirement */
-					reg = <1>;
-					xlnx,video-format = <XVIP_VF_YUV_422>;
-					xlnx,video-width = <8>;
-					scaler_out: endpoint {
-						remote-endpoint = <&vcap_csi_in>;
-					};
-				};
-			};
-		};
-	};
-
-	fragment@3 {
-		target = <&amba_pl>;
-		__overlay__ {
-			vcap_csi {
-				compatible = "xlnx,video";
-				dma-names = "port0";
-				dmas = <&CAPTURE_PIPLINE_v_frmbuf_wr_0 0>;
-				ports {
-					#address-cells = <1>;
-					#size-cells = <0>;
-					port@0 {
-						direction = "input";
-						reg = <0>;
-						vcap_csi_in: endpoint {
-							remote-endpoint = <&scaler_out>;
-						};
-					};
-				};
-			};
+			remote-endpoint = <&ias_out0>;
 		};
 	};
 };
