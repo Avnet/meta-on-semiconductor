@@ -1,3 +1,6 @@
+#include <dt-bindings/media/xilinx-vip.h>
+#include <dt-bindings/gpio/gpio.h>
+
 &amba {
    /delete-node/ axi-interrupt-ctrl;
    /delete-node/ zyxclmm_drm;
@@ -10,19 +13,38 @@
 	};
 };
 
-&amba_pl {
-	v_frmbuf_wr@a0000000 {
-		reset-gpios = <&GPIO_axi_gpio_0 3 0 1>;
+&CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0 {
+	compatible = "xlnx,mipi-csi2-rx-subsystem-5.0";
+	ports {
+		port@0 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
+		port@1 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
 	};
+};
 
-	v_frmbuf_rd@a00c0000 {
-		reset-gpios = <&GPIO_axi_gpio_0 4 0 1>;
+&CAPTURE_PIPELINE_v_frmbuf_wr_0 {
+	reset-gpios = <&GPIO_axi_gpio_0 3 0 1>;
+};
+
+&CAPTURE_PIPELINE_v_proc_ss_0 {
+	compatible = "xlnx,v-vpss-scaler-2.2";
+	reset-gpios = <&GPIO_axi_gpio_0 5 0 1>;
+	ports {
+		port@0 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
+		port@1 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
 	};
 };
 
 
 &i2c1 {
 	i2c-mux@75 {
-		reset-gpios = <&gpio 12 1>;
+		reset-gpios = <&gpio 12 GPIO_ACTIVE_LOW>;
 	};
 };
