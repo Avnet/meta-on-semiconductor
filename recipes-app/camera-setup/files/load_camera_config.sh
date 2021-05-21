@@ -8,7 +8,7 @@ case "$1" in
 		CAMERA_RESOLUTION=1280x800
 	;;
 	ar1335_single)
-		CAMERA_RESOLUTION=3840x3160
+		CAMERA_RESOLUTION=3840x2160
 	;;
 	*)
 		echo "Camera setup not supported: $1";
