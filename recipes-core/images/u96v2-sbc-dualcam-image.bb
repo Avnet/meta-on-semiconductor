@@ -6,6 +6,8 @@ require recipes-core/images/avnet-image-full.inc
 IMAGE_INSTALL_u96v2-sbc += "\
 		ap1302 \
 		ap1302-firmware \
+		device-tree \
+		camera-setup \
 		run-1920-1080 \
 		libdrm \
 		libdrm-tests \

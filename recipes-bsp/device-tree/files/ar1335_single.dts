@@ -1,0 +1,48 @@
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/gpio/gpio.h>
+
+/{
+	fragment@0 {
+		target = <&i2csw_2>;
+		__overlay__ {
+			camera@3c {
+				compatible = "onnn,ap1302";
+				reg = <0x3c>;
+
+				clocks = <&ap1302_osc>;
+
+				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
+				standby-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
+
+				port@2 {
+					reg = <2>;
+					ias_out0: endpoint {
+						remote-endpoint = <&mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0>;
+						data-lanes = <1 2 3 4>;
+					};
+				};
+
+				sensors {
+					#address-cells = <1>;
+					#size-cells = <0>;
+
+					onnn,model = "onnn,ar1335";
+
+					sensor@0 {
+						reg = <0>;
+					};
+				};
+			};
+		};
+	};
+
+	fragment@1 {
+		target = <&mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0>;
+		__overlay__ {
+			remote-endpoint = <&ias_out0>;
+		};
+	};
+};
+

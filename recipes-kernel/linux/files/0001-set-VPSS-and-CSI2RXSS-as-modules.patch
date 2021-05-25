@@ -1,0 +1,29 @@
+From 65c2402fdbc0fa6ca27578570e0ab245ce9e0016 Mon Sep 17 00:00:00 2001
+From: Florian Rebaudo <frebaudo@witekio.com>
+Date: Mon, 28 Dec 2020 11:56:38 -0800
+Subject: [PATCH] set VPSS and CSI2RXSS as modules
+
+---
+ arch/arm64/configs/xilinx_zynqmp_defconfig | 6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm64/configs/xilinx_zynqmp_defconfig b/arch/arm64/configs/xilinx_zynqmp_defconfig
+index 1e3376d4260b..8e7fd1b490e2 100644
+--- a/arch/arm64/configs/xilinx_zynqmp_defconfig
++++ b/arch/arm64/configs/xilinx_zynqmp_defconfig
+@@ -237,9 +237,9 @@ CONFIG_VIDEO_XILINX_MULTISCALER=y
+ CONFIG_VIDEO_XILINX_SDIRXSS=y
+ CONFIG_VIDEO_XILINX_SWITCH=y
+ CONFIG_VIDEO_XILINX_TPG=y
+-CONFIG_VIDEO_XILINX_VPSS_CSC=y
+-CONFIG_VIDEO_XILINX_VPSS_SCALER=y
+-CONFIG_VIDEO_XILINX_CSI2RXSS=y
++CONFIG_VIDEO_XILINX_VPSS_CSC=m
++CONFIG_VIDEO_XILINX_VPSS_SCALER=m
++CONFIG_VIDEO_XILINX_CSI2RXSS=m
+ CONFIG_VIDEO_XILINX_SCD=y
+ CONFIG_VIDEO_XILINX_M2M=y
+ # CONFIG_VGA_ARB is not set
+--
+2.26.2
+
