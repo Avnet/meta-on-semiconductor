@@ -2,8 +2,10 @@
 #include <dt-bindings/gpio/gpio.h>
 
 &amba {
+   /*
    /delete-node/ axi-interrupt-ctrl;
    /delete-node/ zyxclmm_drm;
+   */
 
 	ap1302_osc: ap1302oscillator {
 		compatible = "fixed-clock";
