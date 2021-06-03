@@ -13,8 +13,3 @@ IMAGE_INSTALL_u96v2-sbc += "\
 		libdrm-tests \
 		libdrm-kms \
 "
-
-IMAGE_INSTALL_remove_u96v2-sbc = "\
-		packagegroup-petalinux-x11 \
-		packagegroup-petalinux-matchbox \
-"
