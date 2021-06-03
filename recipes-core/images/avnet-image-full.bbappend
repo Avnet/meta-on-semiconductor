@@ -1,9 +1,7 @@
 DESCRIPTION = "Image definition for ultra96v2 dual cameras boards"
 LICENSE = "MIT"
 
-require recipes-core/images/avnet-image-full.inc
-
-IMAGE_INSTALL_u96v2-sbc += "\
+IMAGE_INSTALL_append_u96v2-sbc += "\
 		ap1302 \
 		ap1302-firmware \
 		device-tree \
