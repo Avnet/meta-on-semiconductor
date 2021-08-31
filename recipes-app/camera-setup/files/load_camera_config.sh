@@ -56,3 +56,4 @@ echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0" > /sys/bus/platform/dr
 echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_csc_0" > /sys/bus/platform/drivers/xilinx-video/bind
 
 sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_3840_2160)
