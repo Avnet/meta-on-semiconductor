@@ -19,6 +19,11 @@ media-ctl -d /dev/media0 -V "'b0040000.v_proc_ss':1 [fmt:UYVY8_1X16/$OUTPUT_RESO
 modetest -D fd4a0000.display -s 43@41:$OUTPUT_RESOLUTION@RG16 -P 39@41:$OUTPUT_RESOLUTION@YUYV -w 40:alpha:0 &
 sleep 1
 
+# Turn off AWB for case of AR0144 sensors (monochrome)
+if [[ 'media-ctl -p -d /dev/media0 | grep ar0144' ]]; then
+	v4l2-ctl --set-ctrl white_balance_auto_preset=0 -d /dev/video0
+fi
+
 gst-launch-1.0 v4l2src device=/dev/video0 io-mode="dmabuf" \
 	! "video/x-raw, width=$OUTPUT_W, height=$OUTPUT_H, format=YUY2, framerate=60/1" \
 	! videoconvert \
