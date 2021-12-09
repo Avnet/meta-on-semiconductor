@@ -1,6 +1,6 @@
 #!/bin/bash
 
-INPUT_RESOLUTION=3840x2160
+INPUT_RESOLUTION=2560x800
 OUTPUT_W=3840
 OUTPUT_H=2160
 OUTPUT_RESOLUTION=${OUTPUT_W}x${OUTPUT_H}
@@ -18,6 +18,12 @@ media-ctl -d /dev/media0 -V "'b0040000.v_proc_ss':1 [fmt:UYVY8_1X16/$OUTPUT_RESO
 
 modetest -D fd4a0000.display -s 43@41:$OUTPUT_RESOLUTION@RG16 -P 39@41:$OUTPUT_RESOLUTION@YUYV -w 40:alpha:0 &
 sleep 1
+
+# Check if running on AR0144 sensors
+if [[ 'media-ctl -p -d /dev/media0 | grep ar0144' ]]; then
+	echo "ERROR: /usr/bin/run_3840_2160 : 3840x2160 not supported with AR0144 sensor(s) !"
+	exit 1
+fi
 
 gst-launch-1.0 v4l2src device=/dev/video0 io-mode="dmabuf" \
 	! "video/x-raw, width=$OUTPUT_W, height=$OUTPUT_H, format=YUY2, framerate=60/1" \
