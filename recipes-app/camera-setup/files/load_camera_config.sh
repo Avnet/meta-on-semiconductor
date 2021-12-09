@@ -26,29 +26,22 @@ esac
 # will prevent the module probe to fail when loading the module after start up.
 #
 # The GPIO[11] is linked the XCZU3EG's IO_L12N_AD0N_26 pin. In the FPGA design the pin IO_L12N_AD0N_26
-# is linked the output #1 of the axi gpio IP.
-# Since the PL gpio module starts at 504, we deasser the GPIO 505 (504 + 1)
+# is linked the output #1 of the axi_gpio_0 core at address 0xa0030000.
 #
-# root@ultra96v2-2020-1:~# cat /sys/class/gpio/gpiochip504/label
-# /amba_pl@0/gpio@a0040000
+# root@u96v2-sbc-dualcam-2021-1:~# cat /sys/class/gpio/gpiochip500/label
+# a0030000.gpio
+# root@u96v2-sbc-dualcam-2021-1:~# cat /sys/class/gpio/gpiochip500/ngpio
+# 8
+source /usr/local/bin/gpio/gpio_common.sh
 
-GPIO_ID=505
-for gpiochip in `ls $SYS_GPIO_FOLDER | grep gpiochip`
-do
-	label=$(cat $SYS_GPIO_FOLDER/$gpiochip/label)
-	base=$(cat $SYS_GPIO_FOLDER/$gpiochip/base)
+BASE_A0030000=$(get_gpiochip_base a0030000)
+((AP1302_ID_GPIO=BASE_A0030000+1))
+echo "   AP1302_ID GPIO = $AP1302_ID_GPIO"
 
-	if [[ "$label" == *"a0050000.gpio"* ]]; then
-		((GPIO_ID=base+0))
+echo $AP1302_ID_GPIO > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio$AP1302_ID_GPIO/direction
+echo 0 > /sys/class/gpio/gpio$AP1302_ID_GPIO/value
 
-		echo "   GPIO11 ID = $GPIO_ID"
-   
-		break
-	fi
-done
-echo $GPIO_ID > /sys/class/gpio/export
-echo out > /sys/class/gpio/gpio$GPIO_ID/direction
-echo 0 > /sys/class/gpio/gpio$GPIO_ID/value
 
 
 rmmod xilinx_vpss_scaler
