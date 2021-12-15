@@ -26,22 +26,30 @@ esac
 # will prevent the module probe to fail when loading the module after start up.
 #
 # The GPIO[11] is linked the XCZU3EG's IO_L12N_AD0N_26 pin. In the FPGA design the pin IO_L12N_AD0N_26
-# is linked the output #1 of the axi gpio IP.
-# Since the PL gpio module starts at 504, we deasser the GPIO 505 (504 + 1)
+# is linked the output #1 of the axi_gpio_0 core at address 0xa0030000.
 #
-# root@ultra96v2-2020-1:~# cat /sys/class/gpio/gpiochip504/label
-# /amba_pl@0/gpio@a0040000
+# root@u96v2-sbc-dualcam-2021-1:~# cat /sys/class/gpio/gpiochip500/label
+# a0030000.gpio
+# root@u96v2-sbc-dualcam-2021-1:~# cat /sys/class/gpio/gpiochip500/ngpio
+# 8
+source /usr/local/bin/gpio/gpio_common.sh
 
-echo 505 > /sys/class/gpio/export
-echo out > /sys/class/gpio/gpio505/direction
-echo 0 > /sys/class/gpio/gpio505/value
+BASE_A0030000=$(get_gpiochip_base a0030000)
+((AP1302_ID_GPIO=BASE_A0030000+1))
+echo "   AP1302_ID GPIO = $AP1302_ID_GPIO"
+
+echo $AP1302_ID_GPIO > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio$AP1302_ID_GPIO/direction
+echo 0 > /sys/class/gpio/gpio$AP1302_ID_GPIO/value
+
+
 
 rmmod xilinx_vpss_scaler
 rmmod xilinx_csi2rxss
 # if xilinx-video driver is already binded in the kernel unbind it. This will force the xilinx-video driver
 # to recreate the V4L2 graph when we re-bind it after updating the device-tree
-if [ -e /sys/bus/platform/drivers/xilinx-video/amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_0 ]; then
-	echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_0" > /sys/bus/platform/drivers/xilinx-video/unbind
+if [ -e /sys/bus/platform/drivers/xilinx-video/amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 ]; then
+	echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0" > /sys/bus/platform/drivers/xilinx-video/unbind
 fi
 
 mkdir -p /sys/kernel/config/device-tree/overlays/ap1302
@@ -49,6 +57,7 @@ cat /boot/devicetree/$1.dtbo > /sys/kernel/config/device-tree/overlays/ap1302/dt
 
 modprobe xilinx_vpss_scaler
 modprobe xilinx_csi2rxss
-echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_0" > /sys/bus/platform/drivers/xilinx-video/bind
+echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0" > /sys/bus/platform/drivers/xilinx-video/bind
 
 sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_3840_2160)
