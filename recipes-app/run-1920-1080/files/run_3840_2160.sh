@@ -20,9 +20,14 @@ modetest -D fd4a0000.display -s 43@41:$OUTPUT_RESOLUTION@RG16 -P 39@41:$OUTPUT_R
 sleep 1
 
 # Check if running on AR0144 sensors
-if [[ 'media-ctl -p -d /dev/media0 | grep ar0144' ]]; then
+media_ctl=$(media-ctl -p -d /dev/media0)
+if [[ "$media_ctl" == *"ar0144"* ]]; then
 	echo "ERROR: /usr/bin/run_3840_2160 : 3840x2160 not supported with AR0144 sensor(s) !"
 	exit 1
+fi
+if [[ "$media_ctl" == *"ar1335"* ]]; then
+	echo "Detected AR1335 - enabling AWB"
+	v4l2-ctl --set-ctrl white_balance_auto_preset=1 -d /dev/video0
 fi
 
 gst-launch-1.0 v4l2src device=/dev/video0 io-mode="dmabuf" \

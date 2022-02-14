@@ -27,10 +27,10 @@
 	xlnx,ppc = <2>;
 	xlnx,vfb;
 	ports {
-		mipi_csi_port0CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0: port@1 {
+		mipi_csi_port1CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0: port@1 {
 			xlnx,video-format = <XVIP_VF_YUV_422>;
 		};
-		mipi_csi_port1CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0: port@0 {
+		mipi_csi_port0CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0: port@0 {
 			xlnx,video-format = <XVIP_VF_YUV_422>;
 #if defined(CONFIG_STATIC_AR0144_DUAL) || defined(CONFIG_STATIC_AR0144_SINGLE) || defined(CONFIG_STATIC_AR1335_SINGLE)
 			mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0: endpoint {
