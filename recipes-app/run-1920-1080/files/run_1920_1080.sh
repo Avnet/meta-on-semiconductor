@@ -20,7 +20,7 @@ modetest -D fd4a0000.display -s 43@41:$OUTPUT_RESOLUTION@RG16 -P 39@41:$OUTPUT_R
 sleep 1
 
 # Turn off AWB for case of AR0144 sensors (monochrome)
-if [[ 'media-ctl -p -d /dev/media0 | grep ar0144' ]]; then
+if [[ "$(media-ctl -p -d /dev/media0 | grep ar0144)" ]]; then
 	v4l2-ctl --set-ctrl white_balance_auto_preset=0 -d /dev/video0
 fi
 
