@@ -8,6 +8,7 @@
 		target = <&i2csw_2>;
 		__overlay__ {
 			camera@3c {
+				status = "okay";
 				compatible = "onnn,ap1302";
 				reg = <0x3c>;
 
@@ -46,6 +47,36 @@
 		target = <&mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0>;
 		__overlay__ {
 			remote-endpoint = <&ias_out0>;
+		};
+	};
+
+	fragment@2 {
+		target = <&CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@3 {
+		target = <&CAPTURE_PIPELINE_v_proc_ss_csc_0>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@4 {
+		target = <&CAPTURE_PIPELINE_v_proc_ss_scaler_0>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@5 {
+		target = <&amba_pl>;
+		__overlay__ {
+			vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
+				status = "okay";
+			};
 		};
 	};
 };
