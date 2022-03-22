@@ -54,20 +54,14 @@ echo $AP1302_ID_GPIO > /sys/class/gpio/export
 echo out > /sys/class/gpio/gpio$AP1302_ID_GPIO/direction
 echo 0 > /sys/class/gpio/gpio$AP1302_ID_GPIO/value
 
-rmmod xilinx_vpss_scaler
-rmmod xilinx_csi2rxss
-# if xilinx-video driver is already binded in the kernel unbind it. This will force the xilinx-video driver
-# to recreate the V4L2 graph when we re-bind it after updating the device-tree
-if [ -e /sys/bus/platform/drivers/xilinx-video/amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 ]; then
-	echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0" > /sys/bus/platform/drivers/xilinx-video/unbind
+mkdir -p /sys/kernel/config/device-tree/overlays/ap1302
+
+if [ ! -e /boot/devicetree/$1.dtbo ]; then
+	echo "/boot/devicetree/$1.dtbo: No such file or directory"
+	exit 2
 fi
 
-mkdir -p /sys/kernel/config/device-tree/overlays/ap1302
 cat /boot/devicetree/$1.dtbo > /sys/kernel/config/device-tree/overlays/ap1302/dtbo
-
-modprobe xilinx_vpss_scaler
-modprobe xilinx_csi2rxss
-echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0" > /sys/bus/platform/drivers/xilinx-video/bind
 
 sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080)
 sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_3840_2160)
