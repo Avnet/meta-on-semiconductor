@@ -1,0 +1,63 @@
+#include <dt-bindings/media/xilinx-vip.h>
+#include <dt-bindings/gpio/gpio.h>
+
+&amba {
+	ap1302_osc: ap1302oscillator {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency  = <48000000>;
+		clock-output-names = "ap1302osc";
+	};
+};
+
+&amba_pl {
+	vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
+		status = "disabled";
+	};
+};
+
+&CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0 {
+	status = "disabled";
+	compatible = "xlnx,mipi-csi2-rx-subsystem-5.0";
+	xlnx,csi-pxl-format = <0x1e>; // XCSI_DT_YUV4228B
+	ports {
+		port@1 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
+		port@0 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
+	};
+};
+
+&CAPTURE_PIPELINE_v_frmbuf_wr_0 {
+	reset-gpios = <&GPIO_axi_gpio_0 3 0 1>;
+};
+
+&CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
+	status = "disabled";
+	compatible = "xlnx,v-vpss-scaler-2.2";
+	reset-gpios = <&GPIO_axi_gpio_0 5 0 1>;
+	ports {
+		port@0 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
+		port@1 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
+	};
+};
+
+&CAPTURE_PIPELINE_v_proc_ss_csc_0 {
+	status = "disabled";
+	compatible = "xlnx,v-vpss-csc";
+	reset-gpios = <&GPIO_axi_gpio_0 4 0 1>;
+	ports {
+		port@0 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
+		port@1 {
+			xlnx,video-format = <XVIP_VF_YUV_422>;
+		};
+	};
+};
