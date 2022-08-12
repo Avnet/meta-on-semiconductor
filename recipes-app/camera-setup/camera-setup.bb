@@ -24,6 +24,6 @@ do_install() {
 	install -m 0755 ${S}/load_default_camera_config.sh ${D}${sysconfdir}/init.d/load_default_camera_config
 }
 
-FILES_${PN} = "${bindir}/load_camera_config \
+FILES:${PN} = "${bindir}/load_camera_config \
                ${sysconfdir}/init.d/load_default_camera_config \
 "
