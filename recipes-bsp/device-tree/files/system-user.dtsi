@@ -42,13 +42,13 @@
 };
 
 &CAPTURE_PIPELINE_v_frmbuf_wr_0 {
-	reset-gpios = <&GPIO_axi_gpio_0 3 0 1>;
+	reset-gpios = <&GPIO_axi_gpio_0 3 GPIO_ACTIVE_LOW>;
 };
 
 
 &CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
 	compatible = "xlnx,v-vpss-scaler-2.2";
-	reset-gpios = <&GPIO_axi_gpio_0 5 0 1>;
+	reset-gpios = <&GPIO_axi_gpio_0 5 GPIO_ACTIVE_LOW>;
 	ports {
 		port@0 {
 			xlnx,video-format = <XVIP_VF_YUV_422>;
@@ -61,7 +61,7 @@
 
 &CAPTURE_PIPELINE_v_proc_ss_csc_0 {
 	compatible = "xlnx,v-vpss-csc";
-	reset-gpios = <&GPIO_axi_gpio_0 4 0 1>;
+	reset-gpios = <&GPIO_axi_gpio_0 4 GPIO_ACTIVE_LOW>;
 	ports {
 		port@0 {
 			xlnx,video-format = <XVIP_VF_YUV_422>;
