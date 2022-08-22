@@ -1,0 +1,11 @@
+[Unit]
+Description=Load Default Camera Configuration
+After=gpio-utils.service
+
+[Service]
+Type=oneshot
+Environment=CAMERA_VARIANT="ar0144_dual"
+ExecStart=/usr/bin/load_camera_config $CAMERA_VARIANT
+
+[Install]
+WantedBy=multi-user.target

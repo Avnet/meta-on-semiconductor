@@ -16,6 +16,18 @@ case "$1" in
 	;;
 esac
 
+# We need to umount boot if it has been previously mounted (EXT4 images) to allow for the different device-tree to be loaded
+mountpoint -q /boot
+BOOT_NOT_MOUNTED=$?
+
+MOUNT_PATH=""
+
+if [ $BOOT_NOT_MOUNTED -eq 0 ]
+then
+	MOUNT_PATH=$(findmnt --target /boot --noheadings -o SOURCE)
+	umount /boot
+fi
+
 # The AP1302 I2C adresses is decided by its GPIO[11] pin (datasheet p.36 I2C Slave Interface):
 # • GPIO[11] == 0: ID == 0x78
 # • GPIO[11] == 1: ID == 0x7A
@@ -42,8 +54,6 @@ echo $AP1302_ID_GPIO > /sys/class/gpio/export
 echo out > /sys/class/gpio/gpio$AP1302_ID_GPIO/direction
 echo 0 > /sys/class/gpio/gpio$AP1302_ID_GPIO/value
 
-
-
 rmmod xilinx_vpss_scaler
 rmmod xilinx_csi2rxss
 # if xilinx-video driver is already binded in the kernel unbind it. This will force the xilinx-video driver
@@ -61,3 +71,9 @@ echo "amba_pl@0:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0" > /sys/bus/platform/dr
 
 sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080)
 sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_3840_2160)
+
+# Remount /Boot if it was previously mounted
+if [ $BOOT_NOT_MOUNTED -eq 0 ]
+then
+	mount $MOUNT_PATH /boot
+fi
