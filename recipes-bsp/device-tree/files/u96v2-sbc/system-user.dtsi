@@ -38,6 +38,7 @@
 	status = "disabled";
 	compatible = "xlnx,v-vpss-scaler-2.2";
 	reset-gpios = <&GPIO_axi_gpio_0 5 GPIO_ACTIVE_LOW>;
+
 	ports {
 		port@0 {
 			xlnx,video-format = <XVIP_VF_YUV_422>;
@@ -52,6 +53,7 @@
 	status = "disabled";
 	compatible = "xlnx,v-vpss-csc";
 	reset-gpios = <&GPIO_axi_gpio_0 4 GPIO_ACTIVE_LOW>;
+
 	ports {
 		port@0 {
 			xlnx,video-format = <XVIP_VF_YUV_422>;

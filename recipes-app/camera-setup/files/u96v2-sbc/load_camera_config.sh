@@ -59,7 +59,6 @@ mkdir -p /sys/kernel/config/device-tree/overlays/ap1302
 if [ ! -e /boot/devicetree/$1.dtbo ]; then
 	echo "/boot/devicetree/$1.dtbo: No such file or directory"
 	exit 2
-fi
 
 cat /boot/devicetree/$1.dtbo > /sys/kernel/config/device-tree/overlays/ap1302/dtbo
 
