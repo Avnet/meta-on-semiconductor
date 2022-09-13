@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://system-user.dtsi \
             file://ar0144_dual.dts \
@@ -6,7 +6,7 @@ SRC_URI += "file://system-user.dtsi \
             file://ar1335_single.dts \
 "
 
-do_compile_prepend() {
+do_compile:prepend() {
     import shutil
     workdir = d.getVar("WORKDIR")
     dt_file_path = d.getVar("DT_FILES_PATH")
