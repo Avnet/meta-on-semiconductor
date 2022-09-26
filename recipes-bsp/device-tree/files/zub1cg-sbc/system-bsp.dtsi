@@ -7,6 +7,7 @@
 / {
    chosen {
       bootargs = "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=512M";
+      xlnx,eeprom= &mac_eeprom;
    };
 
    xlnk {
@@ -91,4 +92,18 @@
    compatible = "xlnx,xps-intc-1.00.a";
    interrupt-parent = <&gic>;
    interrupts = <0 95 1>;
+};
+
+&i2c1 {
+   #address-cells = <1>;
+   #size-cells = <0>;
+   /* Ethernet MAC ID EEPROM */
+   mac_eeprom: mac_eeprom@58 { /* U7 */
+      compatible = "atmel,24mac402";
+      reg = <0x58>;
+   };
+};
+
+&gem2 {
+   local-mac-address = [ff ff ff ff ff ff];
 };
