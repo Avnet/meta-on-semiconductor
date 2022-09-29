@@ -32,5 +32,5 @@ fi
 gst-launch-1.0 v4l2src device=/dev/video0 io-mode="dmabuf" \
 	! "video/x-raw, width=$OUTPUT_W, height=$OUTPUT_H, format=YUY2, framerate=60/1" \
 	! videoconvert \
-	! ximagesink \
+	! fpsdisplaysink video-sink="autovideosink" text-overlay=false sync=false \
 	-v
