@@ -16,6 +16,18 @@ case "$1" in
 	;;
 esac
 
+# We need to umount boot if it has been previously mounted (EXT4 images) to allow for the different device-tree to be loaded
+mountpoint -q /boot
+BOOT_NOT_MOUNTED=$?
+
+MOUNT_PATH=""
+
+if [ $BOOT_NOT_MOUNTED -eq 0 ]
+then
+	MOUNT_PATH=$(findmnt --target /boot --noheadings -o SOURCE)
+	umount /boot
+fi
+
 # The AP1302 I2C adresses is decided by its GPIO[11] pin (datasheet p.36 I2C Slave Interface):
 # • GPIO[11] == 0: ID == 0x78
 # • GPIO[11] == 1: ID == 0x7A
@@ -26,16 +38,16 @@ esac
 # will prevent the module probe to fail when loading the module after start up.
 #
 # The GPIO[11] is linked the XCZU3EG's IO_L12N_AD0N_26 pin. In the FPGA design the pin IO_L12N_AD0N_26
-# is linked the output #1 of the axi_gpio_0 core at address 0xa0000000.
+# is linked the output #1 of the axi_gpio_0 core at address 0xa0030000.
 #
 # root@u96v2-sbc-dualcam-2021-1:~# cat /sys/class/gpio/gpiochip500/label
-# a0000000.gpio
+# a0030000.gpio
 # root@u96v2-sbc-dualcam-2021-1:~# cat /sys/class/gpio/gpiochip500/ngpio
 # 8
 source /usr/local/bin/gpio/gpio_common.sh
 
-BASE=$(get_gpiochip_base a0000000)
-((AP1302_ID_GPIO=BASE+1))
+BASE_A0000000=$(get_gpiochip_base a0000000)
+((AP1302_ID_GPIO=BASE_A0000000+1))
 echo "   AP1302_ID GPIO = $AP1302_ID_GPIO"
 
 echo $AP1302_ID_GPIO > /sys/class/gpio/export
@@ -44,12 +56,19 @@ echo 0 > /sys/class/gpio/gpio$AP1302_ID_GPIO/value
 
 mkdir -p /sys/kernel/config/device-tree/overlays/ap1302
 
-if [ ! -e /boot/devicetree/$1.dtbo ]; then
-	        echo "/boot/devicetree/$1.dtbo: No such file or directory"
-	        exit 2
+if [ ! -e /boot/devicetree/$1.dtbo ]
+then
+	echo "/boot/devicetree/$1.dtbo: No such file or directory"
+	exit 2
 fi
 
 cat /boot/devicetree/$1.dtbo > /sys/kernel/config/device-tree/overlays/ap1302/dtbo
 
 sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080)
 sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_3840_2160)
+
+# Remount /Boot if it was previously mounted
+if [ $BOOT_NOT_MOUNTED -eq 0 ]
+then
+	mount $MOUNT_PATH /boot
+fi
