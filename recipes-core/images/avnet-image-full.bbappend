@@ -9,4 +9,5 @@ IMAGE_INSTALL:append += "\
 		libdrm \
 		libdrm-tests \
 		libdrm-kms \
+		dualcam-python-examples \
 "
