@@ -23,6 +23,8 @@ media_ctl=$(media-ctl -p -d /dev/media0)
 if [[ "$media_ctl" == *"ar0144"* ]]; then
 	echo "Detected AR0144 - disabling AWB"
 	v4l2-ctl --set-ctrl white_balance_auto_preset=0 -d /dev/video0
+	echo "Detected AR0144 - setting brightness"
+	v4l2-ctl --set-ctrl brightness=256 -d ${mipi_video_dev}
 fi
 if [[ "$media_ctl" == *"ar1335"* ]]; then
 	echo "Detected AR1335 - enabling AWB"

@@ -64,8 +64,14 @@ fi
 
 cat /boot/devicetree/$1.dtbo > /sys/kernel/config/device-tree/overlays/ap1302/dtbo
 
-sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080)
-sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_3840_2160)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1280_480_rgb)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1280_480_yuv422)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080_rgb)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080_yuv422)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_2560_800_rgb)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_2560_800_yuv422)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_640_480_rgb)
+sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_640_480_yuv422)
 
 # Remount /Boot if it was previously mounted
 if [ $BOOT_NOT_MOUNTED -eq 0 ]
