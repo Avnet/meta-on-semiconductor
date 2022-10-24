@@ -8,10 +8,10 @@ OUTPUT_RESOLUTION=${OUTPUT_W}x${OUTPUT_H}
 # Specify MIPI capture pipeline devices
 mipi_video_dev="/dev/video0"
 mipi_media_dev="/dev/media0"
-mipi_ap1302_i2c="ap1302.1-003c"
+mipi_ap1302_i2c="ap1302.0-003c"
 
 # Configure MIPI capture pipeline for RGB
-media-ctl -d ${mipi_media_dev} -V "'ap1302.1-003c':2 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
+media-ctl -d ${mipi_media_dev} -V "'${mipi_ap1302_i2c}':2 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 media-ctl -d ${mipi_media_dev} -V "'b0000000.mipi_csi2_rx_subsystem':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 media-ctl -d ${mipi_media_dev} -V "'b0000000.mipi_csi2_rx_subsystem':1 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 media-ctl -d ${mipi_media_dev} -V "'b0010000.v_proc_ss':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
@@ -20,7 +20,7 @@ media-ctl -d ${mipi_media_dev} -V "'b0040000.v_proc_ss':0 [fmt:RBG24/$INPUT_RESO
 media-ctl -d ${mipi_media_dev} -V "'b0040000.v_proc_ss':1 [fmt:RBG24/$OUTPUT_RESOLUTION field:none]"
 
 # Turn off AWB for case of AR0144 sensors (monochrome)
-media_ctl=$(media-ctl -p -d /dev/media0)
+media_ctl=$(media-ctl -p -d ${mipi_media_dev})
 if [[ "$media_ctl" == *"ar0144"* ]]; then
 	echo "Detected AR0144 - disabling AWB"
   v4l2-ctl --set-ctrl white_balance_auto_preset=0 -d ${mipi_video_dev}
