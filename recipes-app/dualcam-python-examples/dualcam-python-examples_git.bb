@@ -25,6 +25,8 @@ do_install() {
 	install -m 0755 ${S}/avnet_dualcam_ar0144_dual_passthrough.py ${HOMEPATH}/avnet_dualcam_ar0144_dual_passthrough.py
 	install -m 0755 ${S}/avnet_dualcam_ar0144_single_passthrough.py ${HOMEPATH}/avnet_dualcam_ar0144_single_passthrough.py
 	install -m 0755 ${S}/avnet_dualcam_ar1335_single_passthrough.py ${HOMEPATH}/avnet_dualcam_ar1335_single_passthrough.py
+	install -m 0755 ${S}/avnet_dualcam_ar0830_dual_passthrough.py ${HOMEPATH}/avnet_dualcam_ar0830_dual_passthrough.py
+	install -m 0755 ${S}/avnet_dualcam_ar0830_single_passthrough.py ${HOMEPATH}/avnet_dualcam_ar0830_single_passthrough.py
 }
 
 FILES:${PN} = "/home/root/avnet_dualcam_python_examples \
