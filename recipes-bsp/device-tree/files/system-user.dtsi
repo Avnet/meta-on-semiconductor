@@ -1,12 +1,6 @@
 #include <dt-bindings/media/xilinx-vip.h>
 #include <dt-bindings/gpio/gpio.h>
 
-/* Define configuration */
-//#define CONFIG_DYNAMIC
-#define CONFIG_STATIC_AR0144_DUAL
-//#define CONFIG_STATIC_AR0144_SINGLE
-//#define CONFIG_STATIC_AR1335_SINGLE
-
 &amba {
 	ap1302_osc: ap1302oscillator {
 		compatible = "fixed-clock";
@@ -16,27 +10,22 @@
 	};
 };
 
+&amba_pl {
+	vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
+		status = "disabled";
+	};
+};
+
 &CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0 {
+	status = "disabled";
 	compatible = "xlnx,mipi-csi2-rx-subsystem-5.0";
-	//xlnx,csi-pxl-format = "YUV422_8bit";
 	xlnx,csi-pxl-format = <0x1e>; // XCSI_DT_YUV4228B
-	xlnx,axis-tdata-width = <32>;
-	xlnx,max-lanes = <4>;
-	xlnx,en-active-lanes;
-	xlnx,vc = <4>;
-	xlnx,ppc = <2>;
-	xlnx,vfb;
 	ports {
-		mipi_csi_port0CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0: port@1 {
+		port@1 {
 			xlnx,video-format = <XVIP_VF_YUV_422>;
 		};
-		mipi_csi_port1CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0: port@0 {
+		port@0 {
 			xlnx,video-format = <XVIP_VF_YUV_422>;
-#if defined(CONFIG_STATIC_AR0144_DUAL) || defined(CONFIG_STATIC_AR0144_SINGLE) || defined(CONFIG_STATIC_AR1335_SINGLE)
-			mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0: endpoint {
-				remote-endpoint = <&ias_out0>;
-			};
-#endif
 		};
 	};
 };
@@ -45,8 +34,8 @@
 	reset-gpios = <&GPIO_axi_gpio_0 3 0 1>;
 };
 
-
 &CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
+	status = "disabled";
 	compatible = "xlnx,v-vpss-scaler-2.2";
 	reset-gpios = <&GPIO_axi_gpio_0 5 0 1>;
 	ports {
@@ -60,6 +49,7 @@
 };
 
 &CAPTURE_PIPELINE_v_proc_ss_csc_0 {
+	status = "disabled";
 	compatible = "xlnx,v-vpss-csc";
 	reset-gpios = <&GPIO_axi_gpio_0 4 0 1>;
 	ports {
@@ -72,80 +62,8 @@
 	};
 };
 
-
-#ifdef CONFIG_DYNAMIC
 &i2c1 {
 	i2c-mux@75 {
 		reset-gpios = <&gpio 12 GPIO_ACTIVE_LOW>;
 	};
 };
-#endif
-
-#if defined(CONFIG_STATIC_AR0144_DUAL) || defined(CONFIG_STATIC_AR0144_SINGLE) || defined(CONFIG_STATIC_AR1335_SINGLE)
-&i2c1 {
-	i2c-mux@75 {
-		reset-gpios = <&gpio 12 GPIO_ACTIVE_LOW>;
-		i2csw_2: i2c@2 {
-			camera@3c {
-				compatible = "onnn,ap1302";
-				reg = <0x3c>;
-
-				clocks = <&ap1302_osc>;
-
-				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
-				standby-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
-
-				port@2 {
-					reg = <2>;
-					ias_out0: endpoint {
-						remote-endpoint = <&mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0>;
-						data-lanes = <1 2 3 4>;
-					};
-				};
-
-#ifdef CONFIG_STATIC_AR0144_DUAL
-				sensors {
-					#address-cells = <1>;
-					#size-cells = <0>;
-
-					onnn,model = "onnn,ar0144";
-
-					sensor@0 {
-						reg = <0>;
-					};
-
-					sensor@1 {
-						reg = <1>;
-					};
-				};
-#endif
-#ifdef CONFIG_STATIC_AR0144_SINGLE
-				sensors {
-					#address-cells = <1>;
-					#size-cells = <0>;
-
-					onnn,model = "onnn,ar0144";
-
-					sensor@0 {
-						reg = <0>;
-					};
-				};
-#endif
-#ifdef CONFIG_STATIC_AR1335_SINGLE
-				sensors {
-					#address-cells = <1>;
-					#size-cells = <0>;
-
-					onnn,model = "onnn,ar1335";
-
-					sensor@0 {
-						reg = <0>;
-					};
-				};
-#endif
-			};
-		};
-	};
-};
-#endif
-		
