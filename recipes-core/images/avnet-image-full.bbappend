@@ -3,7 +3,6 @@ LICENSE = "MIT"
 
 IMAGE_INSTALL:append += "\
 		ap1302 \
-		ap1302-firmware \
 		device-tree \
 		camera-setup \
 		run-1920-1080 \
