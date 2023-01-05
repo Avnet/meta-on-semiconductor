@@ -10,7 +10,8 @@ SRC_URI:u96v2-sbc = "file://run_1920_1080.sh \
                      file://optimize_qos_for_dp.sh \
 "
 
-SRC_URI:zub1cg-sbc = "file://run_640_480.sh \
+SRC_URI:zub1cg-sbc = "file://run_640_480_rgb.sh \
+                      file://run_640_480_yuv422.sh \
                       file://run_1280_480_rgb.sh \
                       file://run_1280_480_yuv422.sh \
                       file://run_1920_1080_rgb.sh \
@@ -31,7 +32,8 @@ do_install:u96v2-sbc() {
 
 do_install:append:zub1cg-sbc() {
     install -d ${D}${bindir}
-    install -m 0755 ${WORKDIR}/run_640_480.sh ${D}${bindir}/run_640_480
+    install -m 0755 ${WORKDIR}/run_640_480_rgb.sh ${D}${bindir}/run_640_480_rgb
+    install -m 0755 ${WORKDIR}/run_640_480_yuv422.sh ${D}${bindir}/run_640_480_yuv422
     install -m 0755 ${WORKDIR}/run_1280_480_rgb.sh ${D}${bindir}/run_1280_480_rgb
     install -m 0755 ${WORKDIR}/run_1280_480_yuv422.sh ${D}${bindir}/run_1280_480_yuv422
     install -m 0755 ${WORKDIR}/run_1920_1080_rgb.sh ${D}${bindir}/run_1920_1080_rgb
@@ -45,7 +47,8 @@ FILES:${PN}:u96v2-sbc = "${bindir}/run_1920_1080 \
                          ${bindir}/optimize_qos_for_dp \
 "
 
-FILES:${PN}:zub1cg-sbc = "${bindir}/run_640_480 \
+FILES:${PN}:zub1cg-sbc = "${bindir}/run_640_480_rgb \
+                          ${bindir}/run_640_480_yuv422 \
                           ${bindir}/run_1280_480_rgb \
                           ${bindir}/run_1280_480_yuv422 \
                           ${bindir}/run_1920_1080_rgb \
