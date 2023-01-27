@@ -21,6 +21,8 @@
 					reg = <2>;
 					ias_out0: endpoint {
 						remote-endpoint = <&mipi_csi_inCAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0>;
+						link-frequencies = /bits/ 64 <900000000>;
+						clock-lanes = <0>;
 						data-lanes = <1 2 3 4>;
 					};
 				};
