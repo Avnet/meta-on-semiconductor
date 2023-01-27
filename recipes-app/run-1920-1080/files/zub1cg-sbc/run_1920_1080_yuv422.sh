@@ -19,6 +19,9 @@ media-ctl -d ${mipi_media_dev} -V "'b0010000.v_proc_ss':1 [fmt:UYVY8_1X16/$INPUT
 media-ctl -d ${mipi_media_dev} -V "'b0040000.v_proc_ss':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 media-ctl -d ${mipi_media_dev} -V "'b0040000.v_proc_ss':1 [fmt:UYVY8_1X16/$OUTPUT_RESOLUTION field:none]"
 
+modetest -D fd4a0000.display -s 43@41:$OUTPUT_RESOLUTION@RG16 -P 39@41:$OUTPUT_RESOLUTION@YUYV -w 40:alpha:0 &
+sleep 1
+
 # Turn off AWB for case of AR0144 sensors (monochrome)
 media_ctl=$(media-ctl -p -d ${mipi_media_dev})
 if [[ "$media_ctl" == *"ar0144"* ]]; then
@@ -36,6 +39,5 @@ fi
 gst-launch-1.0 v4l2src device=${mipi_video_dev} io-mode="dmabuf" \
 	! "video/x-raw, width=$OUTPUT_W, height=$OUTPUT_H, format=YUY2, framerate=60/1" \
 	! videoconvert \
-	! fpsdisplaysink video-sink="autovideosink" text-overlay=false sync=false \
+	! kmssink plane-id=39 bus-id=fd4a0000.display render-rectangle="<0,0,$OUTPUT_W,$OUTPUT_H> fullscreen-overlay=true sync=false" \
 	-v
-
