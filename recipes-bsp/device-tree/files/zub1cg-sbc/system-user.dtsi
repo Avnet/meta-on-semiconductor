@@ -1,6 +1,8 @@
 #include <dt-bindings/media/xilinx-vip.h>
 #include <dt-bindings/gpio/gpio.h>
 
+
+
 &amba {
 	ap1302_osc: ap1302oscillator {
 		compatible = "fixed-clock";
@@ -14,6 +16,22 @@
 	vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
 		status = "disabled";
 	};
+
+	zocl: zyxclmm_drm {
+		compatible = "xlnx,zocl";
+		status = "okay";
+		interrupt-parent = <&gic>;
+		interrupts = <0 104 4>, <0 105 4>, <0 106 4>, <0 107 4>,
+				 <0 108 4>, <0 109 4>, <0 110 4>, <0 111 4>;
+	};
+};
+
+/* Vitis interrupt connected at PS interrupt offset [6] (89+6=95) */
+/* This description may be missing/incorrect in the pl.dtsi, so we add/fix it here */
+&axi_intc_0 {
+	compatible = "xlnx,xps-intc-1.00.a";
+	interrupt-parent = <&gic>;
+	interrupts = <0 95 1>;
 };
 
 &CAPTURE_PIPELINE_mipi_csi2_rx_subsyst_0 {
