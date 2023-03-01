@@ -28,17 +28,21 @@
 				};
 
 				sensors {
-					#address-cells = <1>;
-					#size-cells = <0>;
-
-					onnn,model = "onnn,ar0144";
+					sensor,model = "ar0144";
+					sensor,resolution = <1280 800>;
+					sensor,format = <0x3011>; // MEDIA_BUS_FMT_SGRBG12_1X12
+					sensor,primary-clk-rst-only;
 
 					sensor@0 {
 						reg = <0>;
+						status = "okay";
+						sip = <0x3320>;
 					};
 
 					sensor@1 {
 						reg = <1>;
+						status = "okay";
+						sip = <0x3330>;
 					};
 				};
 			};

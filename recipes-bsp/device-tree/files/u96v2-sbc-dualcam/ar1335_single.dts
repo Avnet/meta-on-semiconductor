@@ -31,10 +31,20 @@
 					#address-cells = <1>;
 					#size-cells = <0>;
 
-					onnn,model = "onnn,ar1335";
+					sensor,model = "ar1335";
+					sensor,resolution = <3840 2160>;
+					sensor,format = <0x300a>; // MEDIA_BUS_FMT_SGRBG10_1X10
 
 					sensor@0 {
 						reg = <0>;
+						status = "okay";
+						sip = <0xF36C>;
+					};
+
+					sensor@1 {
+						reg = <1>;
+						status = "disabled";
+						sip = <0x336C>;
 					};
 				};
 			};
