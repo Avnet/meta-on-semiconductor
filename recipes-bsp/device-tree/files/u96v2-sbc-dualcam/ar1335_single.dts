@@ -5,7 +5,7 @@
 
 /{
 	fragment@0 {
-		target = <&i2c0>;
+		target = <&i2csw_2>;
 		__overlay__ {
 			camera@3c {
 				status = "okay";
@@ -14,8 +14,8 @@
 
 				clocks = <&ap1302_osc>;
 
-				reset-gpios = <&GPIO_axi_gpio_0 6 GPIO_ACTIVE_LOW>;
-				standby-gpios = <&GPIO_axi_gpio_0 7 GPIO_ACTIVE_HIGH>;
+				reset-gpios = <&gpio 39 GPIO_ACTIVE_LOW>;
+				standby-gpios = <&gpio 44 GPIO_ACTIVE_HIGH>;
 
 				port@2 {
 					reg = <2>;
@@ -31,14 +31,20 @@
 					#address-cells = <1>;
 					#size-cells = <0>;
 
-					onnn,model = "onnn,ar0144";
+					sensor,model = "ar1335";
+					sensor,resolution = <3840 2160>;
+					sensor,format = <0x300a>; // MEDIA_BUS_FMT_SGRBG10_1X10
 
 					sensor@0 {
 						reg = <0>;
+						status = "okay";
+						sip = <0xF36C>;
 					};
 
 					sensor@1 {
 						reg = <1>;
+						status = "disabled";
+						sip = <0x336C>;
 					};
 				};
 			};

@@ -8,7 +8,7 @@ SRC_URI = "file://load-default-camera-config.service \
 
 S = "${WORKDIR}"
 
-RDEPENDS:${PN} = "gpio-utils-systemd"
+RDEPENDS:${PN} = "gpio-utils"
 
 inherit systemd
 

@@ -10,8 +10,8 @@ media-ctl -d /dev/media0 -V "'ap1302.4-003c':2 [fmt:UYVY8_1X16/$INPUT_RESOLUTION
 media-ctl -d /dev/media0 -V "'b0000000.mipi_csi2_rx_subsystem':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 media-ctl -d /dev/media0 -V "'b0000000.mipi_csi2_rx_subsystem':1 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 
-media-ctl -d /dev/media0 -V "'b0010000.v_proc_ss':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
-media-ctl -d /dev/media0 -V "'b0010000.v_proc_ss':1 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
+media-ctl -d /dev/media0 -V "'b0020000.v_proc_ss':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
+media-ctl -d /dev/media0 -V "'b0020000.v_proc_ss':1 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 
 media-ctl -d /dev/media0 -V "'b0040000.v_proc_ss':0 [fmt:UYVY8_1X16/$INPUT_RESOLUTION field:none]"
 media-ctl -d /dev/media0 -V "'b0040000.v_proc_ss':1 [fmt:UYVY8_1X16/$OUTPUT_RESOLUTION field:none]"
