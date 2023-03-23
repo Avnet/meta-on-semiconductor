@@ -1,9 +1,9 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://system-user.dtsi \
-            file://ar0144_dual.dts \
-            file://ar0144_single.dts \
-            file://ar1335_single.dts \
+            file://ar0144.dts \
+            file://ar1335.dts \
+            file://ar0830.dts \
 "
 
 do_compile:prepend() {
@@ -11,7 +11,7 @@ do_compile:prepend() {
     workdir = d.getVar("WORKDIR")
     dt_file_path = d.getVar("DT_FILES_PATH")
 
-    shutil.copyfile(workdir + "/ar0144_dual.dts", dt_file_path + "/ar0144_dual.dts")
-    shutil.copyfile(workdir + "/ar0144_single.dts", dt_file_path + "/ar0144_single.dts")
-    shutil.copyfile(workdir + "/ar1335_single.dts", dt_file_path + "/ar1335_single.dts")
+    shutil.copyfile(workdir + "/ar0144.dts", dt_file_path + "/ar0144.dts")
+    shutil.copyfile(workdir + "/ar1335.dts", dt_file_path + "/ar1335.dts")
+    shutil.copyfile(workdir + "/ar0830.dts", dt_file_path + "/ar0830.dts")
 }
