@@ -4,7 +4,7 @@ After=gpio-utils.service
 
 [Service]
 Type=oneshot
-Environment=CAMERA_VARIANT="ar0144_dual"
+Environment=CAMERA_VARIANT="ar0144"
 ExecStart=/usr/bin/load_camera_config $CAMERA_VARIANT
 
 [Install]

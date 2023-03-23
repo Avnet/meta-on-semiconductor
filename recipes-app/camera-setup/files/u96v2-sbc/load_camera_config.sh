@@ -1,15 +1,9 @@
 #!/bin/sh
 
 case "$1" in
-	ar0144_dual)
-		CAMERA_RESOLUTION=2560x800
-	;;
-	ar0144_single)
-		CAMERA_RESOLUTION=1280x800
-	;;
-	ar1335_single)
-		CAMERA_RESOLUTION=3840x2160
-	;;
+	"ar0144" | "ar1335" | "ar0830")
+        echo "Loading Camera $1"
+    ;;
 	*)
 		echo "Camera setup not supported: $1";
 		exit 22
@@ -63,9 +57,6 @@ then
 fi
 
 cat /boot/devicetree/$1.dtbo > /sys/kernel/config/device-tree/overlays/ap1302/dtbo
-
-sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_1920_1080)
-sed -i -E "s/INPUT_RESOLUTION=[0-9]+x[0-9]+/INPUT_RESOLUTION=$CAMERA_RESOLUTION/g" $(which run_3840_2160)
 
 # Remount /Boot if it was previously mounted
 if [ $BOOT_NOT_MOUNTED -eq 0 ]
