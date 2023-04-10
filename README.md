@@ -79,7 +79,7 @@ meta-on-semiconductor contains one conf folder and multiple recipes:
 ├── README
 ├── README.md
 ├── recipes-app
-│   └── run-1920-1080
+│   └── run-camera
 ├── recipes-bsp
 │   ├── ap1302-firmware
 │   └── device-tree
@@ -93,11 +93,11 @@ conf/layer.conf:
 
 Adds the meta-on-semiconductor on top of the meta-avnet.
 
-recipes-app/run-1920-1080:
+recipes-app/run-camera:
 --------------------------
 
-Installs the script 'run_1920_1080.sh' in the rootfs. This script is used to display the images captured
-by the cameras on a screen with a resoltion of 1920x1080 at a framerate of 60 fps.
+Installs the script 'run_camera.sh' in the rootfs. This script is used to display the images captured
+by the cameras on a screen.
 
 recipes-bsp/ap1302-firmware:
 ----------------------------

@@ -5,7 +5,7 @@ DUALCAM_PACKAGES += "\
 		ap1302 \
 		device-tree \
 		camera-setup \
-		run-1920-1080 \
+		run-camera \
 		libdrm \
 		libdrm-tests \
 		libdrm-kms \
