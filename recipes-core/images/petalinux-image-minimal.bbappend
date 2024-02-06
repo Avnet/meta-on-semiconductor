@@ -8,14 +8,13 @@ DUALCAM_PACKAGES += "\
 		run-camera \
 		libdrm \
 		libdrm-tests \
-		libdrm-kms \
 		dualcam-python-examples \
 "
 
-IMAGE_INSTALL:append:u96v2-sbc-dualcam += "\
+IMAGE_INSTALL:append:u96v2-sbc-dualcam = " \
 		${DUALCAM_PACKAGES} \
 "
 
-IMAGE_INSTALL:append:zub1cg-sbc-dualcam += "\
+IMAGE_INSTALL:append:zub1cg-sbc-dualcam = " \
 		${DUALCAM_PACKAGES} \
 "
