@@ -8,7 +8,7 @@ inherit module python3native
 SRC_URI = "git://github.com/Avnet/ap1302-driver.git;protocol=https;branch=Avnet/dev/xlnx_6.1.5; \
 			"
 
-SRCREV = "597111885525e54c5fa3e8ad2bb6b6f510491adf"
+SRCREV = "7222ec471e0e819d3e5a14c50a0703494e1bd6e2"
 
 DEPENDS += "virtual/kernel"
 
