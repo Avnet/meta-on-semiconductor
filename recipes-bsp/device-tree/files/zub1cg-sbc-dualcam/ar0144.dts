@@ -78,7 +78,7 @@
 	};
 
 	fragment@5 {
-		target = <&amba_pl>;
+		target-path = "/";
 		__overlay__ {
 			vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
 				status = "okay";
