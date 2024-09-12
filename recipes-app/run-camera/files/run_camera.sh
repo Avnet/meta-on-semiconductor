@@ -98,8 +98,8 @@ output_res=${width}x${height}
 echo -e "\n\nRun Camera with: mode=$mode, sink=$sink, output resolution=$output_res, format=$format\n"
 
 # Detect MIPI capture pipeline devices
-MEDIA_DEV=/dev/$(ls /sys/devices/platform/amba_pl@0/amba_pl@0\:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0/ | grep media)
-VIDEO_DEV=/dev/$(ls /sys/devices/platform/amba_pl@0/amba_pl@0\:vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0/video4linux/ | grep video)
+MEDIA_DEV=/dev/$(ls /sys/devices/platform/vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0/ | grep media)
+VIDEO_DEV=/dev/$(ls /sys/devices/platform/vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0/video4linux/ | grep video)
 
 CSC_DEV=$(ls /sys/bus/platform/drivers/xilinx-vpss-csc/  | grep v_proc_ss)
 SCALER_DEV=$(ls /sys/bus/platform/drivers/xilinx-vpss-scaler/  | grep v_proc_ss)

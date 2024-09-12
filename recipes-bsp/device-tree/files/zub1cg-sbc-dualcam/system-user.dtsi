@@ -2,6 +2,19 @@
 #include <dt-bindings/gpio/gpio.h>
 
 
+/ {
+	vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
+		status = "disabled";
+	};
+
+	zyxclmm_drm {
+		compatible = "xlnx,zocl";
+		status = "okay";
+		interrupt-parent = <&gic>;
+		interrupts = <0 104 4>, <0 105 4>, <0 106 4>, <0 107 4>,
+				 <0 108 4>, <0 109 4>, <0 110 4>, <0 111 4>;
+	};
+};
 
 &amba {
 	ap1302_osc: ap1302oscillator {
@@ -9,20 +22,6 @@
 		#clock-cells = <0>;
 		clock-frequency  = <48000000>;
 		clock-output-names = "ap1302osc";
-	};
-};
-
-&amba_pl {
-	vcap_CAPTURE_PIPELINE_v_proc_ss_scaler_0 {
-		status = "disabled";
-	};
-
-	zocl: zyxclmm_drm {
-		compatible = "xlnx,zocl";
-		status = "okay";
-		interrupt-parent = <&gic>;
-		interrupts = <0 104 4>, <0 105 4>, <0 106 4>, <0 107 4>,
-				 <0 108 4>, <0 109 4>, <0 110 4>, <0 111 4>;
 	};
 };
 
@@ -79,3 +78,7 @@
 		};
 	};
 };
+
+&axi_iic_0 {
+	/delete-node/ stts22htr@3f;
+ };

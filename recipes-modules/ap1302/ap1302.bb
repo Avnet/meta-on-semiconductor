@@ -5,10 +5,10 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0-only;md5=801f80980d171d
 
 inherit module python3native
 
-SRC_URI = "git://github.com/Avnet/ap1302-driver.git;protocol=https;branch=dev/xlnx_6.1.5; \
+SRC_URI = "git://github.com/Avnet/ap1302-driver.git;protocol=https;branch=xlnx_6.6; \
 			"
 
-SRCREV = "f46744a9d8dc6ff41643567dc672e3bd4a3f641a"
+SRCREV = "46364e0a7034bc36d4627a7f2d498094046dc67f"
 
 DEPENDS += "virtual/kernel"
 
