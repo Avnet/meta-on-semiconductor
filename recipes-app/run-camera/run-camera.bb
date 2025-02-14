@@ -9,7 +9,7 @@ SRC_URI = "file://run_camera.sh \
            file://optimize_qos_for_dp.sh \
 "
 
-RDEPENDS:${PN} = "bash"
+RDEPENDS:${PN} = "bash xxd"
 
 do_install() {
     install -d ${D}${bindir}
